@@ -4,12 +4,18 @@ window.Vue = require('vue');
 window.axios = require('axios');
 
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('users', require('./components/Users.vue'));
-Vue.component('add-user', require('./components/AddUser.vue'));
-Vue.component('edit-user', require('./components/EditUser.vue'));
+var ComponentExample=(require('./components/ExampleComponent.vue'));
+var ComponentUsers=(require('./components/Users.vue'));
+var ComponentAddUser=(require('./components/AddUser.vue'));
+var ComponentEditUser=(require('./components/EditUser.vue'));
 
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    components:{
+        'example-component':ComponentExample,
+        'users':ComponentUsers,
+        'add-user':ComponentAddUser,
+        'edit-user':ComponentEditUser,
+    }
 });

@@ -57,7 +57,11 @@
                         this.name = '';
                         this.email = '';
                         this.password = '';
-                        window.location.href = '/users';
+                        const router = new VueRouter({
+                            routes: [
+                                { path: '/users/create', redirect: '/users' }
+                            ]
+                        })
                     }
                 }).catch(error => {
                     console.log(error)
