@@ -30,6 +30,27 @@
 
         </table>
 
+        <div class="pagination">
+            <button class="btn btn-light" v-on:click="paginationUser(pagination.prev_page_url)"
+                    :disabled="!pagination.prev_page_url">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="btn btn-light" v-on:click="paginationUser(pagination.first_page_url)"
+                    :disabled="!pagination.prev_page_url">
+               1
+            </button>
+
+           <span class="btn btn-light">{{pagination.current_page}}</span>
+            <button class="btn btn-light" v-on:click="paginationUser(pagination.last_page_url)"
+                    :disabled="!pagination.next_page_url">
+            {{pagination.last_page}}
+        </button>
+            <button class="btn btn-light" v-on:click="paginationUser(pagination.next_page_url)"
+                    :disabled="!pagination.next_page_url">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
     </div>
 </template>
 
@@ -42,7 +63,9 @@
                     id: 0,
                     name: '',
                     email: '',
-                }
+                },
+                url: '/api/users',
+                pagination: []
             }
 
 
@@ -54,9 +77,11 @@
         },
         methods: {
             getUsers() {
+                let $this = this;
+                axios.get(this.url).then(response => {
 
-                axios.get('/api/users').then(response => {
-                    this.users = response.data
+                    this.users = response.data.data;
+                    $this.makePagination(response.data);
                 })
             },
             deleteUser(id) {
@@ -67,6 +92,24 @@
                 }).catch(error => {
                     console.log(error);
                 })
+            },
+            makePagination(data) {
+                let pagination = {
+                    current_page: data.current_page,
+                    last_page: data.last_page,
+                    first_page: data.first_page,
+                    last_page_url:data.last_page_url,
+                    first_page_url:data.first_page_url,
+                    next_page_url: data.next_page_url,
+                    prev_page_url: data.prev_page_url,
+
+                };
+                this.pagination = pagination;
+
+            },
+            paginationUser(url) {
+                this.url = url;
+                this.getUsers()
             }
 
         }
