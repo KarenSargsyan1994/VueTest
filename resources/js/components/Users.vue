@@ -21,14 +21,15 @@
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td><a :href="'/users/'+user.id+'/edit'" class="btn btn-success">Edit</a></td>
-                <td><button
-                        type="button"
-                        class="btn btn-danger"
-                        @click="showModal(user.id)"
-                >
-                    Delete</button>
+                <td>
+                    <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="showModal(user.id)"
+                    >
+                        Delete
+                    </button>
                 </td>
-
 
 
             </tr>
@@ -44,14 +45,14 @@
             </button>
             <button class="btn btn-light" v-on:click="paginationUser(pagination.first_page_url)"
                     :disabled="!pagination.prev_page_url">
-               1
+                1
             </button>
 
-           <span class="btn btn-light">{{pagination.current_page}}</span>
+            <span class="btn btn-light">{{pagination.current_page}}</span>
             <button class="btn btn-light" v-on:click="paginationUser(pagination.last_page_url)"
                     :disabled="!pagination.next_page_url">
-            {{pagination.last_page}}
-        </button>
+                {{pagination.last_page}}
+            </button>
             <button class="btn btn-light" v-on:click="paginationUser(pagination.next_page_url)"
                     :disabled="!pagination.next_page_url">
                 <i class="fas fa-chevron-right"></i>
@@ -59,11 +60,8 @@
         </div>
 
 
-
-
-
         <!-- use the modal component, pass in the prop -->
-        <modal :userID="deletedUserID" v-show="isModalVisible"   @close="closeModal">
+        <modal :userID="deletedUserID" v-show="isModalVisible" @close="closeModal">
             <h3 slot="header">custom header</h3>
 
         </modal>
@@ -72,6 +70,7 @@
 
 <script>
     import modal from './modal.vue';
+
     export default {
         components: {
             modal,
@@ -84,10 +83,10 @@
                     name: '',
                     email: '',
                 },
-                deletedUserID:5,
+                deletedUserID: 5,
                 url: '/api/users',
                 pagination: [],
-                isModalVisible:false
+                isModalVisible: false
             }
 
 
@@ -112,8 +111,8 @@
                     current_page: data.current_page,
                     last_page: data.last_page,
                     first_page: data.first_page,
-                    last_page_url:data.last_page_url,
-                    first_page_url:data.first_page_url,
+                    last_page_url: data.last_page_url,
+                    first_page_url: data.first_page_url,
                     next_page_url: data.next_page_url,
                     prev_page_url: data.prev_page_url,
 
@@ -127,7 +126,7 @@
             },
             showModal(id) {
 
-               this.deletedUserID=id;
+                this.deletedUserID = id;
 
                 this.isModalVisible = true;
             },

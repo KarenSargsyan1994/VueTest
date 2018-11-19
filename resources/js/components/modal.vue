@@ -3,12 +3,12 @@
         <div class="modal-mask">
             <div class="modal-wrapper">
                 <div class="modal-container">
-  <div class="row mb-2" ><h3>Do you want delete this user</h3></div>
+                    <div class="row mb-2"><h3>Do you want delete this user</h3></div>
                     <div class="row">
 
                         <div class="col-md-8 offset-3">
                             <button class="btn btn-danger mr-4" @click="deleteUser">Yes</button>
-                            <button class="btn btn-success"  @click="$emit('close')">No</button>
+                            <button class="btn btn-success" @click="$emit('close')">No</button>
 
                         </div>
 
@@ -22,16 +22,16 @@
 </template>
 <script>
     export default {
-        props:['userID'],
+        props: ['userID'],
         name: 'modal',
-        data:function(){
-            console.log(this.userID)
-            return {id:this.userID}
+        data: function () {
+
+            return {id: this.userID}
         },
         methods: {
 
             deleteUser() {
-                 var id=this.userID
+                var id = this.userID
                 axios.delete('/api/users/' + id).then(response => {
                     window.location.href = '/users';
 
@@ -66,7 +66,7 @@
 
     .modal-container {
         width: 400px;
-        height:150px;
+        height: 150px;
         margin: 0px auto;
         padding: 20px 30px;
         background-color: #fff;
