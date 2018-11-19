@@ -21,7 +21,14 @@
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td><a :href="'/users/'+user.id+'/edit'" class="btn btn-success">Edit</a></td>
-                <td><a href="javascript:;" class="btn btn-danger" v-on:click="deleteUser(user.id)">Delete</a></td>
+                <td><button
+                        type="button"
+                        class="btn btn-danger"
+                        @click="showModal(user.id)"
+                >
+                    Delete</button>
+                </td>
+
 
 
             </tr>
@@ -51,11 +58,24 @@
             </button>
         </div>
 
+
+
+
+
+        <!-- use the modal component, pass in the prop -->
+        <modal :userID="deletedUserID" v-show="isModalVisible"   @close="closeModal">
+            <h3 slot="header">custom header</h3>
+
+        </modal>
     </div>
 </template>
 
 <script>
+    import modal from './modal.vue';
     export default {
+        components: {
+            modal,
+        },
         data() {
             return {
                 users: [],
@@ -64,8 +84,10 @@
                     name: '',
                     email: '',
                 },
+                deletedUserID:5,
                 url: '/api/users',
-                pagination: []
+                pagination: [],
+                isModalVisible:false
             }
 
 
@@ -84,15 +106,7 @@
                     $this.makePagination(response.data);
                 })
             },
-            deleteUser(id) {
-                axios.delete('/api/users/' + id).then(response => {
-                    window.location.href = '/users';
 
-
-                }).catch(error => {
-                    console.log(error);
-                })
-            },
             makePagination(data) {
                 let pagination = {
                     current_page: data.current_page,
@@ -110,6 +124,15 @@
             paginationUser(url) {
                 this.url = url;
                 this.getUsers()
+            },
+            showModal(id) {
+
+               this.deletedUserID=id;
+
+                this.isModalVisible = true;
+            },
+            closeModal() {
+                this.isModalVisible = false;
             }
 
         }
